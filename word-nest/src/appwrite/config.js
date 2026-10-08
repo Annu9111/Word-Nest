@@ -55,7 +55,21 @@ export class Service(){
 
 
 
-    
+    async deletePost(slug){
+        try{
+            await this.Databases.deleteDocument(
+                conf.appwriteDatabaseId,
+                conf.appwriteTableId,
+                slug, 
+            ) 
+            return true; 
+        }catch(error){
+            console.log("Appwrite Service :: deletePost :: error",error);
+            return false;
+        }
+    }
+
+    async 
 }
 
 
