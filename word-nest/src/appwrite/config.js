@@ -1,3 +1,4 @@
+
 import conf from "../conf/conf.js";
 import { Client, ID, TablesDB, Storage, Query } from "appwrite";
 
@@ -15,6 +16,7 @@ export class Service {
         this.bucket = new Storage(this.client);
     }
 
+    // Create a new post
     async createPost({ title, slug, content, featuredimg, status, userid }) {
         try {
             return await this.tablesDB.createRow({
@@ -26,17 +28,16 @@ export class Service {
                     content,
                     featuredimg,
                     status,
-                    userid
-                }
+                    userid,
+                },
             });
         } catch (error) {
-            console.log(
-                "Appwrite Service :: createPost :: error",
-                error
-            );
+            console.error("Appwrite Service :: createPost :: error", error);
+            return false;
         }
     }
 
+    // Update an existing post
     async updatePost(slug, { title, content, featuredimg, status }) {
         try {
             return await this.tablesDB.updateRow({
@@ -47,117 +48,97 @@ export class Service {
                     title,
                     content,
                     featuredimg,
-                    status
-                }
+                    status,
+                },
             });
         } catch (error) {
-            console.log(
-                "Appwrite Service :: updatePost :: error",
-                error
-            );
+            console.error("Appwrite Service :: updatePost :: error", error);
+            return false;
         }
     }
 
+    // Delete a post
     async deletePost(slug) {
         try {
             await this.tablesDB.deleteRow({
                 databaseId: conf.appwriteDatabaseId,
                 tableId: conf.appwriteTableId,
-                rowId: slug
+                rowId: slug,
             });
 
             return true;
         } catch (error) {
-            console.log(
-                "Appwrite Service :: deletePost :: error",
-                error
-            );
-
+            console.error("Appwrite Service :: deletePost :: error", error);
             return false;
         }
     }
 
+    // Get one post
     async getPost(slug) {
         try {
             return await this.tablesDB.getRow({
                 databaseId: conf.appwriteDatabaseId,
                 tableId: conf.appwriteTableId,
-                rowId: slug
+                rowId: slug,
             });
         } catch (error) {
-            console.log(
-                "Appwrite Service :: getPost :: error",
-                error
-            );
-
+            console.error("Appwrite Service :: getPost :: error", error);
             return false;
         }
     }
 
-    async getPosts(
-        queries = [Query.equal("status", "active")]
-    ) {
+    // Get all posts
+    async getPosts(queries = [Query.equal("status", "active")]) {
         try {
             return await this.tablesDB.listRows({
                 databaseId: conf.appwriteDatabaseId,
                 tableId: conf.appwriteTableId,
-                queries
+                queries,
             });
         } catch (error) {
-            console.log(
-                "Appwrite Service :: getPosts :: error",
-                error
-            );
-
+            console.error("Appwrite Service :: getPosts :: error", error);
             return false;
         }
     }
 
-    // File upload services
-
+    // Upload a file to Appwrite Storage
     async uploadFile(file) {
         try {
-            return await this.bucket.createFile(
-                conf.appwriteBucketId,
-                ID.unique(),
-                file
-            );
+            return await this.bucket.createFile({
+                bucketId: conf.appwriteBucketId,
+                fileId: ID.unique(),
+                file,
+            });
         } catch (error) {
-            console.log(
-                "Appwrite Service :: uploadFile :: error",
-                error
-            );
-
+            console.error("Appwrite Service :: uploadFile :: error", error);
             return false;
         }
     }
 
+    // Delete a file from Appwrite Storage
     async deleteFile(fileId) {
         try {
-            await this.bucket.deleteFile(
-                conf.appwriteBucketId,
-                fileId
-            );
+            await this.bucket.deleteFile({
+                bucketId: conf.appwriteBucketId,
+                fileId,
+            });
 
             return true;
         } catch (error) {
-            console.log(
-                "Appwrite Service :: deleteFile :: error",
-                error
-            );
-
+            console.error("Appwrite Service :: deleteFile :: error", error);
             return false;
         }
     }
 
+    // Get a file preview URL
     getFilePreview(fileId) {
-        return this.bucket.getFilePreview(
-            conf.appwriteBucketId,
-            fileId
-        );
+        return this.bucket.getFilePreview({
+            bucketId: conf.appwriteBucketId,
+            fileId,
+        });
     }
 }
 
-const service = new Service();
+const appwriteService = new Service();
 
-export default service;
+export default appwriteService;
