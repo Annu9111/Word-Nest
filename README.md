@@ -45,13 +45,13 @@ WordNest is a full-stack blogging platform where users can create, publish, read
 ## Screenshots
 
 ### Home Page
-![WordNest Home Page](Screenshots/home.png)
+![WordNest Home Page](word-nest/Screenshots/home.png)
 
 ### Add Post
-![WordNest Add Post](Screenshots/add-post.png)
+![WordNest Add Post](word-nest/Screenshots/add-post.png)
 
 ### Login Page
-![WordNest Login](Screenshots/login.png)
+![WordNest Login](word-nest/Screenshots/login.png)
 
 ## Getting Started
 
