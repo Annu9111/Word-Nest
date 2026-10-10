@@ -131,12 +131,13 @@ export class Service {
     }
 
     // Get a file preview URL
-    getFilePreview(fileId) {
-        return this.bucket.getFilePreview({
-            bucketId: conf.appwriteBucketId,
-            fileId,
-        });
-    }
+
+getFilePreview(fileId) {
+    return this.bucket.getFileView({
+        bucketId: conf.appwriteBucketId,
+        fileId: fileId,
+    });
+}
 }
 
 const appwriteService = new Service();

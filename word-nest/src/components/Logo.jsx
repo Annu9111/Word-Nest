@@ -1,11 +1,9 @@
-// import React from 'react'
-
-function Logo({width='100px'}) {
-  return (
-    <div>
-      Logo
-    </div>
-  )
+export default function Logo() {
+    return (
+        <img
+            src="/wordnest-logo.png"
+            alt="WordNest Logo"
+            className="h-12 w-12 object-contain"
+        />
+    );
 }
-
-export default Logo

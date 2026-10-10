@@ -37,7 +37,7 @@ function Header() {
         <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-gray-950/90 py-3 text-white shadow-lg backdrop-blur-md">
             <Container>
                 <nav className="flex flex-wrap items-center gap-4">
-                    {/* Logo */}
+                    
                     <Link
                         to="/"
                         className="shrink-0 transition-transform duration-200 hover:scale-105"
